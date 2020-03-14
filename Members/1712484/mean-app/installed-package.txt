@@ -1,0 +1,5 @@
+Angular CLI
+npm install -g @angular/cli
+
+-Angular Material
+ng add @angular/material
