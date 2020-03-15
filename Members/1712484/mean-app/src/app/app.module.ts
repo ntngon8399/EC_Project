@@ -9,12 +9,14 @@ import { MaterialModule } from "./material/material.module";
 
 import { ToolbarComponent } from "./header/toolbar.component";
 import { MemListComponent } from "./mem-list/mem-list.component"
+import { ProductListComponent } from './product-category/product-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
-    MemListComponent
+    MemListComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,
