@@ -1,0 +1,18 @@
+{
+  "name": "1712848",
+  "version": "1.0.0",
+  "description": "1712848",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-handlebars-sections": "^1.0.1",
+    "mysql": "^2.18.1"
+  }
+}

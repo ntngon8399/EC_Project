@@ -1,0 +1,20 @@
+<div class="row row-cols-1 row-cols-md-4">
+    {{#each listproducts }}
+    <a href="/detail/{{this.MA_SAN_PHAM}}">
+    <div class="col mb-4">
+        <div class="card">
+            <img src="{{this.LINK_ANH}}" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">{{this.TEN_SAN_PHAM}}</h5>
+                <div class="badge badge-primary text-wrap" style="width: 6rem;">
+                    {{this.GIA_HIEN_TAI}} VND
+                </div>
+                    <div class="badge badge-success text-wrap" style="width: 6rem;">
+                        Chi Tiết
+                    </div>
+            </div>
+        </div>
+    </div>
+    </a>
+    {{/each}}
+</div>
