@@ -1,0 +1,17 @@
+Initial a firebase project
+firebase init
+
+Select "Functions"
+Select Js for language
+Select yes for ESLint
+Select yes for dependencies
+
+Open .\functions\index.js
+
+Install express and cors
+npm i express cors
+
+Replace $RESOURCE_DIR with %RESOURCE_DIR%
+
+Fix Error: HTTP Error: 403, Unknown Error
+firebase use <project id/instace>

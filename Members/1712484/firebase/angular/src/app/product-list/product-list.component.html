@@ -1,0 +1,15 @@
+<mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>Product List</mat-expansion-panel-header>
+      <mat-list *ngFor="let product of productList">
+        <mat-list-item>Tên sản phẩm: {{ product.name }}</mat-list-item>
+        <mat-list-item><img src="{{product.image}}" alt="image"></mat-list-item>
+        <mat-list-item>Mô tả: {{ product.description }}</mat-list-item>
+        <mat-list-item>Thương hiệu: {{ product.brand }}</mat-list-item>
+        <mat-list-item>Giá: {{ product.price }}</mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+      <p *ngIf="productList.length <= 0">Nothing to show up!</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+  
