@@ -96,6 +96,16 @@ module.exports = {
         const sql = `select MONTH(enroll.enroll_date) AS month,count(*) as sl from enroll group by MONTH(enroll.enroll_date)`;
         const rows = db.load(sql);
         return rows;
+    },
+    TOP6RatingCourse: async() => {
+        const sql = `SELECT ROW_NUMBER() OVER (ORDER BY (select 1)) as STT, T.course_title, T.AVE FROM (select course_title ,sum(rating_star)/count(course_title) AS AVE from elearning.feedback,courses
+        where courses.course_id = feedback.course_id
+        group by courses.course_title
+        order by AVE DESC
+        LIMIT 6 )AS T
+        `;
+        const rows = db.load(sql);
+        return rows;
     }
     
 }
