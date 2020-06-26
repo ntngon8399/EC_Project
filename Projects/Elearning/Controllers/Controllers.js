@@ -7,7 +7,7 @@ const model = require('../Models/Models');
 router.get('/', async (req, res) => {
     const la = await model.GetAllAuthors(); 
     const dcc = await model.GetAllCourseDiscount(1); 
-    res.render('../views/HomePage/Home',{listauthors : la,discountcourse: dcc});   
+    res.render('../views/HomePage/Homepage',{listauthors : la,discountcourse: dcc});   
 });
 
 
