@@ -79,9 +79,12 @@ router.get('/Cart/paypal/success/:idcart/:money', async (req, res) => {
     bi = bi+1;
     var bill_id = "BI00" + bi;
     var biid = String(bill_id);
-
-    await model.InsertBill(biid, IDcart, money);
-    res.render('../views/PaypalPay/Success.hbs');   
+    var checkcart = await model.CheckCartExistsInBill(IDcart);
+    if(checkcart[0].dem == 0){  //Kiểm tra giỏ hàng đã thanh toán trước đó chưa.
+        await model.InsertBill(biid, IDcart, money);
+        await model.UpadeCart_Paystatus(IDcart,money);
+        res.render('../views/PaypalPay/Success.hbs'); 
+    }else res.render('../views/PaypalPay/Error.hbs');  
 });
 
 module.exports = router;

@@ -116,6 +116,16 @@ module.exports = {
         const sql = `SELECT SUBSTRING(id_bill,3,3) AS ID from elearning.bill  order by id_bill DESC limit 1`;
         const rows = db.load(sql);
         return rows;
+    },
+    UpadeCart_Paystatus: async(id_cart,pay_money) => {
+        const sql = `UPDATE cart set pay_status = 1, order_date = NOW(), total_price = ${pay_money} where cart_id = '${id_cart}';`;
+        const rows = db.load(sql);
+        return rows;
+    },
+    CheckCartExistsInBill: async(id_cart) => {
+        const sql = `select count(*) AS dem from bill, cart where bill.cart_id ='${id_cart}' and cart.cart_id = bill.cart_id and cart.pay_status = 1;`;
+        const rows = db.load(sql);
+        return rows;
     }
     
 }
