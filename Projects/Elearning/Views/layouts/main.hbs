@@ -35,16 +35,42 @@
 	<link rel="stylesheet" href="../../public/css/animate.min.css">
 	<link rel="stylesheet" href="../../public/css/owl.carousel.css">
 	<link rel="stylesheet" href="../../public/css/main.css">
+
+	<link rel="stylesheet" href="../../public/css/css.css">
+
+
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
+		id="bootstrap-css">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+	{{!-- admin page --}}
+	<link href="../../public/dist/css/styles.css" rel="stylesheet" />
+	<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"
+		crossorigin="anonymous" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
+		crossorigin="anonymous"></script>
+	{{!-- admin page --}}
+	{{!-- Link cua Paypal Sanbox --}}
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+	{{!-- Link cua Paypal Sanbox --}}
 </head>
+
 <body>
-    {{{body}}}
+	<script
+		src="https://www.paypal.com/sdk/js?client-id=Adk2F54w3OXwHI7SMplnmnQROo6rG7NXbliP6ko_LO6hHFiinmKJHiilKFtEGxsnSImrnjx74JO2TXBF"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
+		</script>
+	{{>header}}
+	{{{body}}}
 
-
-    <script src="../../public/js/vendor/jquery-2.2.4.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-	 crossorigin="anonymous"></script>
+	{{!-- hower-effec --}}
+	<script src="../../public/js/vendor/jquery-2.2.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
 	<script src="../../public/js/vendor/bootstrap.min.js"></script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+	<script type="text/javascript"
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
 	<script src="../../public/js/easing.min.js"></script>
 	<script src="../../public/js/hoverIntent.js"></script>
 	<script src="../../public/js/superfish.min.js"></script>
@@ -60,5 +86,23 @@
 	<script src="../../public/js/jquery.counterup.min.js"></script>
 	<script src="../../public/js/mail-script.js"></script>
 	<script src="../../public/js/main.js"></script>
+	{{!-- hower-effec --}}
+
+	{{!-- admin page --}}
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+	<script src="../../public/dist/js/scripts.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+	<script src="../../public/dist/assets/demo/chart-area-demo.js"></script>
+	<script src="../../public/dist/assets/demo/chart-bar-demo.js"></script>
+	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+	<script src="../../public/dist/assets/demo/datatables-demo.js"></script>
+	{{!-- admin page --}}
+	{{!-- zotabox --}}
+	{{!-- <script async src="https://static.zotabox.com/0/e/0ec89e0cdca5a7615dbd380273330d23/widgets.js"></script> --}}
+	{{!-- zotabox --}}
 </body>
+
 </html>
