@@ -111,6 +111,13 @@ CREATE TABLE  `Discount` (
   `saleoff` int
 );
 
+CREATE TABLE  `bill` (
+  `id_bill` varchar(10),
+  `cart_id` varchar(10),
+  `pay_date` datetime,
+  `pay_money` int
+);
+
 INSERT INTO Discount VALUES
     ('CS001','50'),
     ('CS002','25'),
