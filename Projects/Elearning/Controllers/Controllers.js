@@ -71,11 +71,17 @@ router.get('/admin/CustomerManage', async (req, res) => {
     res.render('../views/AdminPage/CustomerManage',{AllStu: AllStu, MonMana: MonthMana});   
 });
 
-router.get('/Cart/paypal/success', async (req, res) => { 
-    const AllStu = await model.GetAllStudent();
-    const MonthMana = await model.ManageEnrollByMonth();
-    res.render('../views/AdminPage/CustomerManage',{AllStu: AllStu, MonMana: MonthMana});   
-});
+router.get('/Cart/paypal/success/:idcart/:money', async (req, res) => { 
+    const IDcart = req.params.idcart;
+    const money = parseInt(req.params.money);
+    const IDbill = await model.GetBillIDTop1();
+    var bi = parseInt(IDbill[0].ID);
+    bi = bi+1;
+    var bill_id = "BI00" + bi;
+    var biid = String(bill_id);
 
+    await model.InsertBill(biid, IDcart, money);
+    res.render('../views/PaypalPay/Success.hbs');   
+});
 
 module.exports = router;
