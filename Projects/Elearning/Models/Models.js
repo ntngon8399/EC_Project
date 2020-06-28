@@ -106,6 +106,16 @@ module.exports = {
         `;
         const rows = db.load(sql);
         return rows;
+    },
+    InsertBill: async(id_bill, id_cart,pay_money) => {
+        const sql = `INSERT INTO elearning.bill VALUES ('${id_bill}','${id_cart}', NOW(),${pay_money});`;
+        const rows = db.load(sql);
+        return rows;
+    },
+    GetBillIDTop1: async() => {
+        const sql = `SELECT SUBSTRING(id_bill,3,3) AS ID from elearning.bill  order by id_bill DESC limit 1`;
+        const rows = db.load(sql);
+        return rows;
     }
     
 }
