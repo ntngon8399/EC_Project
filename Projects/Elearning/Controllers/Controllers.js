@@ -1,13 +1,64 @@
 const express = require('express');
 const router = express.Router();
 const model = require('../Models/Models');
+const bodyParser = require('body-parser');
+const Passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
+
+//Passport setup
+router.use(session({secret: "mysecret"}));
+router.use(Passport.initialize());
+router.use(Passport.session());
+router.use(bodyParser.urlencoded({extended: true}));
+router.use(bodyParser.json());
+
+Passport.use(new LocalStrategy(
+    async (username, password, done) => {
+        const usr = await model.CheckUsernameAndPass(username, password);
+        const id = usr[0].student_id;
+        //console.log(id);
+        if(usr[0].checkresults == 1){ //Nếu chỗ này sửa lại thành >0 thì database sẽ hack được bằng SQL injection.
+            return done(null,id);
+        }else return done(null, false);
+    }
+));
+
+Passport.serializeUser( (id, done) => {
+    done(null, id);
+});
+  
+Passport.deserializeUser((id, done) => {
+    console.log('User đăng nhập hiện tại:' + id);
+    return done(null,id);
+});
+
+router.get('/login', async (req, res) =>{
+    res.render('../views/LoginPage/Login.hbs');
+});
+router.post('/login',Passport.authenticate('local', { 
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true 
+}));
+
+// router.get('/loginsuccess',(req,res) => {
+//   console.log(req.isAuthenticated());
+//   res.send('Ban dang nhap thanh cong');
+// });
+//Ket thuc setup passport---
 
 //router.use('../public',express.static('public'));
 
 router.get('/', async (req, res) => {
-    const la = await model.GetAllAuthors(); 
-    const dcc = await model.GetAllCourseDiscount(1); 
-    res.render('../views/HomePage/Homepage',{listauthors : la,discountcourse: dcc});   
+    // console.log(req.isAuthenticated());
+    if (req.isAuthenticated()) {
+        const la = await model.GetAllAuthors(); 
+        const dcc = await model.GetAllCourseDiscount(1); 
+        res.render('../views/HomePage/Home',{listauthors : la,discountcourse: dcc}); 
+    } else {
+        res.redirect('/login'); 
+	}
 });
 
 
@@ -55,8 +106,10 @@ router.get('/Cart', async (req, res) => {
 });
 
 router.get('/admin', async (req, res) => { 
-    const MonthMana = await model.ManageEnrollByMonth();
-    res.render('../views/AdminPage/RevenueManage',{MonMana: MonthMana});   
+    //const MonthMana = await model.ManageEnrollByMonth();
+    const StuMoney = await model.GetMoneyALlStudent();
+    const RevPerMon = await model.GetRevenuePerMonth();
+    res.render('../views/AdminPage/RevenueManage',{StuMoney: StuMoney,RevPerMon: RevPerMon});   
 });
 
 router.get('/admin/CourseManage', async (req, res) => { 
@@ -77,12 +130,20 @@ router.get('/Cart/paypal/success/:idcart/:money', async (req, res) => {
     const IDbill = await model.GetBillIDTop1();
     var bi = parseInt(IDbill[0].ID);
     bi = bi+1;
-    var bill_id = "BI00" + bi;
+    var bill_id;
+    if(bi < 10){
+        bill_id = "BI00" + bi;
+    }else if(bi <100 && bi>=10){
+        bill_id = "BI0" + bi;
+    }else{
+        bill_id = "BI"+ bi;
+    }
     var biid = String(bill_id);
     var checkcart = await model.CheckCartExistsInBill(IDcart);
     if(checkcart[0].dem == 0){  //Kiểm tra giỏ hàng đã thanh toán trước đó chưa.
         await model.InsertBill(biid, IDcart, money);
         await model.UpadeCart_Paystatus(IDcart,money);
+        console.log('Thanh toán thành công ID bill: '+biid);
         res.render('../views/PaypalPay/Success.hbs'); 
     }else res.render('../views/PaypalPay/Error.hbs');  
 });
