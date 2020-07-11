@@ -110,9 +110,9 @@ CREATE TABLE  `Discount` (
   `course_id` varchar(10),
   `saleoff` int
 );
-
+-- drop table `bill`
 CREATE TABLE  `bill` (
-  `id_bill` varchar(10),
+  `id_bill` varchar(10) PRIMARY KEY,
   `cart_id` varchar(10),
   `pay_date` datetime,
   `pay_money` int
@@ -559,8 +559,32 @@ INSERT INTO subjects VALUES
     ('SB002','CS030');
     
     INSERT INTO cart VALUES
-    ('CA001','ST002','2021-07-05 20:22:00',0,0,0);
+    ('CA001','ST003','2020-01-27 00:00:00',0,12,1),
+    ('CA002','ST004','2020-02-27 00:00:00',0,23,1),
+    ('CA003','ST005','2020-03-27 00:00:00',0,13,1),
+    ('CA004','ST006','2020-04-27 00:00:00',0,12,1),
+    ('CA005','ST007','2020-05-27 00:00:00',0,10,1),
+    ('CA006','ST008','2020-06-27 00:00:00',0,11,1),
+    ('CA007','ST009','2020-07-27 00:00:00',0,56,1),
+    ('CA008','ST010','2020-08-27 00:00:00',0,34,1),
+    ('CA009','ST011','2020-09-27 00:00:00',0,12,1),
+    ('CA010','ST004','2020-10-27 00:00:00',0,18,1),
+    ('CA011','ST003','2020-11-27 00:00:00',0,80,1),
+    ('CA012','ST001','2020-12-27 00:00:00',0,34,1);
 
+	INSERT INTO elearning.bill VALUES 
+    ('BI001','CA001','2020-01-27 00:00:00',12),
+    ('BI002','CA002','2020-02-27 00:00:00',23),
+    ('BI003','CA003','2020-03-27 00:00:00',13),
+    ('BI004','CA004','2020-04-27 00:00:00',12),
+    ('BI005','CA005','2020-05-27 00:00:00',10),
+    ('BI006','CA006','2020-06-27 00:00:00',11),
+    ('BI007','CA007','2020-07-27 00:00:00',56),
+    ('BI008','CA008','2020-08-27 00:00:00',34),
+    ('BI009','CA009','2020-09-27 00:00:00',12),
+    ('BI010','CA010','2020-10-27 00:00:00',18),
+    ('BI011','CA011','2020-11-27 00:00:00',80),
+	('BI012','CA012','2020-12-27 00:00:00',34); 
 
 INSERT INTO cartitems VALUES
     ('CA001','CS001'),
@@ -610,12 +634,12 @@ INSERT INTO administrators VALUES
     
     
     INSERT INTO students VALUES
-    ('ST001','student1',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p200349/cp/cpc/images/masterrepository/performer%20images/p200349/leto.jpg','Keller','Keller',NULL,'jw@gmail.com',123456789,'2019-08-02 10:00:00','2019-08-02 10:00:00',0),
-    ('ST002','student2',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p302167/cp/cpc/images/masterrepository/performer%20images/p302167/chrisevans-2019.jpg','Potts','Potts',NULL,'jw@gmail.com',123456789,'2021-05-07 20:22:00','2021-05-07 20:22:00',0),
-    ('ST003','student3',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p19966/cp/cpc/images/masterrepository/performer%20images/p19966/robert162574544.jpg','Barron','Barron',NULL,'jw@gmail.com',123456789,'2020-01-02 03:02:00','2020-01-02 03:02:00',0),
-    ('ST004','student4',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p562566/cp/cpc/images/masterrepository/performer%20images/p562566/jenniferlawrence-2019.jpg','Marshall','Marshall',NULL,'jw@gmail.com',123456789,'2021-04-02 21:08:00','2021-04-02 21:08:00',0),
-    ('ST005','student5',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p419915/cp/cpc/images/masterrepository/performer%20images/p419915/channing162613136.jpg','Valdez','Valdez',NULL,'jw@gmail.com',123456789,'2021-04-19 13:16:00','2021-04-19 13:16:00',0),
-    ('ST006','student6',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p13722/cp/cpc/images/masterrepository/performer%20images/p13722/clooneyperfp.jpg','Barlow','Barlow',NULL,'jw@gmail.com',123456789,'2019-11-24 13:20:00','2019-11-24 13:20:00',0),
+    ('ST001','student1',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p200349/cp/cpc/images/masterrepository/performer%20images/p200349/leto.jpg','Keller','Potts',NULL,'jw@gmail.com',123456789,'2019-08-02 10:00:00','2019-08-02 10:00:00',0),
+    ('ST002','student2',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p302167/cp/cpc/images/masterrepository/performer%20images/p302167/chrisevans-2019.jpg','Potts','Keller',NULL,'jw@gmail.com',123456789,'2021-05-07 20:22:00','2021-05-07 20:22:00',0),
+    ('ST003','student3',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p19966/cp/cpc/images/masterrepository/performer%20images/p19966/robert162574544.jpg','Barron','Marshall',NULL,'jw@gmail.com',123456789,'2020-01-02 03:02:00','2020-01-02 03:02:00',0),
+    ('ST004','student4',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p562566/cp/cpc/images/masterrepository/performer%20images/p562566/jenniferlawrence-2019.jpg','Marshall','Barron',NULL,'jw@gmail.com',123456789,'2021-04-02 21:08:00','2021-04-02 21:08:00',0),
+    ('ST005','student5',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p419915/cp/cpc/images/masterrepository/performer%20images/p419915/channing162613136.jpg','Valdez','Barlow',NULL,'jw@gmail.com',123456789,'2021-04-19 13:16:00','2021-04-19 13:16:00',0),
+    ('ST006','student6',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p13722/cp/cpc/images/masterrepository/performer%20images/p13722/clooneyperfp.jpg','Barlow','Valdez',NULL,'jw@gmail.com',123456789,'2019-11-24 13:20:00','2019-11-24 13:20:00',0),
     ('ST007','student7',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p18682/cp/cpc/images/masterrepository/performer%20images/p18682/johnnydepp-2017.jpg','Bennett','Bennett',NULL,'jw@gmail.com',123456789,'2021-01-03 17:50:00','2021-01-03 17:50:00',0),
     ('ST008','student8',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p646044/cp/cpc/images/masterrepository/performer%20images/p646044/margot-robbie.jpg','Lara','Lara',NULL,'jw@gmail.com',123456789,'2019-10-12 18:54:00','2019-10-12 18:54:00',0),
     ('ST009','student9',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p200349/cp/cpc/images/masterrepository/performer%20images/p200349/leto.jpg','Kerr','Kerr',NULL,'jw@gmail.com',123456789,'2021-02-16 10:21:00','2021-02-16 10:21:00',0),

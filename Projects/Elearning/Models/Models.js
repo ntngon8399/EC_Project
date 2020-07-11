@@ -16,7 +16,7 @@ module.exports = {
         return rows;
     },
     GetFeedBackByCourseID: async (IDCourse) => {
-        const sql = `select * from feedback where course_id = '${IDCourse}'`;
+        const sql = `select * from feedback,students where course_id = '${IDCourse}' and feedback.student_id = students.student_id`;
         const rows = db.load(sql);
         return rows;
     },
@@ -126,6 +126,32 @@ module.exports = {
         const sql = `select count(*) AS dem from bill, cart where bill.cart_id ='${id_cart}' and cart.cart_id = bill.cart_id and cart.pay_status = 1;`;
         const rows = db.load(sql);
         return rows;
-    }
+    },
+    GetMoneyALlStudent: async() => {
+        const sql = `select students.student_id, students.fname, students.lname, sum(bill.pay_money) AS money from bill,cart,students where cart.cart_id = bill.cart_id and cart.student_id = students.student_id 
+        group by students.student_id, students.fname, students.lname`;
+        const rows = db.load(sql);
+        return rows;
+    },
+    GetRevenuePerMonth: async() => {
+        const sql = `select MONTH(bill.pay_date) as month, sum(bill.pay_money) AS money  from bill group by MONTH(bill.pay_date);`;
+        const rows = db.load(sql);
+        return rows;
+    },
+    CheckUsernameAndPass: async(username, password) => {
+        const sql = `select count(*) AS checkresults, student_id from students where student_password ='${password}' and student_username = '${username}';`;
+        const rows = db.load(sql);
+        return rows;
+    },
+    InsertUser: async(ID,username, password,picture, firtname,lastname, mail, phone ) => {
+        const sql = `INSERT INTO students VALUES ('${ID}','${username}','${password}','${picture}','${firtname}','${lastname}',NULL,'${mail}',${phone},NOW(),NOW(),0)`;
+        const rows = db.load(sql);
+        return rows;
+    },
+    GetStudentIDTop1: async() => {
+        const sql = `SELECT SUBSTRING(student_id,3,3) AS ID from elearning.students order by student_id DESC limit 1;`;
+        const rows = db.load(sql);
+        return rows;
+    },
     
 }
