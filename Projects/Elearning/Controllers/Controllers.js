@@ -6,6 +6,8 @@ const Passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const Models = require('../Models/Models');
+const path = require('path');
+
 
 //Passport setup
 router.use(session({
@@ -40,7 +42,7 @@ Passport.deserializeUser((id, done) => {
 });
 
 router.get('/login', async (req, res) => {
-    res.render('../views/LoginPage/Login.hbs');
+    res.sendFile('Login.html', { root: path.join(__dirname, '../views/LoginPage/') });
 });
 router.post('/login', Passport.authenticate('local', {
     successRedirect: '/',
@@ -51,13 +53,7 @@ router.post('/login', Passport.authenticate('local', {
 //Ket thuc setup passport---
 
 //router.use('../public',express.static('public'));
-router.get('/register', async (req, res) => {
-    if (req.isAuthenticated() == false) {
-        res.render('../views/LoginPage/Register.hbs');
-    } else {
-        res.render('../views/LoginPage/Login.hbs');
-    }
-});
+
 router.post('/register', async(req,res)=>{
     const username = req.body.username;
     const password = req.body.password;
