@@ -8,12 +8,11 @@ const session = require('express-session');
 const Models = require('../Models/Models');
 const path = require('path');
 
-
 //Passport setup
 router.use(session({
     secret: "mysecret",
     cookie: {
-        maxAge: 1000 * 60 * 5
+        maxAge: 1000 * 60 * 180
     }
 }));
 router.use(Passport.initialize());
@@ -37,7 +36,6 @@ Passport.serializeUser((id, done) => {
 });
 
 Passport.deserializeUser((id, done) => {
-    console.log('User đăng nhập hiện tại:' + id);
     return done(null, id);
 });
 
@@ -46,15 +44,22 @@ router.get('/login', async (req, res) => {
 });
 router.post('/login', Passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/login',
+    failureRedirect: '/Login',
     failureFlash: true
 }));
 
 //Ket thuc setup passport---
 
 //router.use('../public',express.static('public'));
-
-router.post('/register', async(req,res)=>{
+// router.get('/register', async (req, res) => {
+//     if (req.isAuthenticated()) {
+//         //console.log(req.user);
+//         res.render('../views/LoginPage/Login.hbs');
+//     } else {
+//         res.render('../views/LoginPage/Register.hbs');
+//     }
+// });
+router.post('/register', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const firtname = req.body.firstname;
@@ -75,30 +80,61 @@ router.post('/register', async(req,res)=>{
     }
     var studentID = String(stu_id);  //Tao ID Student moi.
     const picture_link = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSnlVwlWdJBGf3RoYzkrBwoFXqVBVz1B8LxyQ&usqp=CAU';
-    await model.InsertUser(studentID,username, password,picture_link,firtname,lastname,mail,phone);
-    console.log('Đã tạo thành công user '+firtname+lastname+' mã ' + studentID);
+    await model.InsertUser(studentID, username, password, picture_link, firtname, lastname, mail, phone);
+    console.log('Đã tạo thành công user ' + firtname + lastname + ' mã ' + studentID);
     res.render('../views/animationPage/Welcome.hbs');
 
 });
 
-
+var IDcart = 'CA001';  // Biến ID cart Global
 router.get('/', async (req, res) => {
-    // console.log(req.isAuthenticated());
     const CheckUser = req.isAuthenticated();
-    if (req.isAuthenticated()) {
-        //Trang chủ dành cho user.
-        const la = await model.GetAllAuthors();
-        const dcc = await model.GetAllCourseDiscount(1);
-        res.render('../views/HomePage/Home', { listauthors: la, discountcourse: dcc, CheckUser });
+    if (req.user == 'AD001') {
+        console.log('\nAdmin đăng nhập hiện tại:' + req.user);
+        res.redirect('/admin');
     } else {
-        //Trang chủ cho khách vãng lai
-        const la = await model.GetAllAuthors();
-        const dcc = await model.GetAllCourseDiscount(1);
-        res.render('../views/HomePage/Home', { listauthors: la, discountcourse: dcc, CheckUser });
+        if (req.isAuthenticated()) {
+            console.log('\nUser đăng nhập hiện tại:' + req.user);
+            //Tạo cart mới cho user nếu chưa có cart cũ
+            const IDstudent = req.user; //Nho sua cho nay
+            const CheckCart = await model.CheckCartNotPayByIDstudent(IDstudent); //Kiem tra gio hang nao chua thanh toan cua student
+            if (CheckCart[0].dem > 0) { // Neu co cart chua thanh toan => load cart do len
+                const CartList = await model.SelectCartNotPayByIDstudent(IDstudent);//Danh sach cart chua thanh toan
+                IDcart = CartList[0].cart_id;
+                console.log('Load Cart cũ ID ' + IDcart + ' của user ' + IDstudent);
+            } else {  //Neu khong co cart nao chua thanh toan
+                const IDca = await model.GetCartIDTop1();
+                var id = parseInt(IDca[0].ID);
+                id = id + 1;
+                var ca_id;
+                if (id < 10) {
+                    ca_id = "CA00" + id;
+                } else if (id < 100 && id >= 10) {
+                    ca_id = "CA0" + id;
+                } else {
+                    ca_id = "CA" + id;
+                }
+                IDcart = String(ca_id);  //Tao ID cart moi
+                await model.InsertNewCart(IDcart, IDstudent); //tao cart moi cho student do
+                console.log('Đã tạo cart mới ID ' + IDcart + ' cho user ' + IDstudent);
+            }
+            //Kết thúc tạo cart mới
+
+            //Trang chủ dành cho user.
+            const la = await model.GetAllAuthors();
+            const dcc = await model.GetAllCourseDiscount(1);
+            res.render('../views/HomePage/Home', { listauthors: la, discountcourse: dcc, CheckUser });
+        } else {
+            //Trang chủ cho khách vãng lai
+            const la = await model.GetAllAuthors();
+            const dcc = await model.GetAllCourseDiscount(1);
+            res.render('../views/HomePage/Home', { listauthors: la, discountcourse: dcc, CheckUser });
+        }
     }
 });
 
 router.get('/logout', function (req, res) {
+    console.log('User đã Logout\n ');
     req.logout();
     res.redirect('/');
 });
@@ -110,21 +146,26 @@ router.get('/Courses/:IDSubject', async (req, res) => {
     res.render('../views/CoursesPage/ListCourse.hbs', { ListCourse: lc, CheckUser });
 });
 
+
 router.get('/Courses/:IDSubject/:IDCourse', async (req, res) => {
     const CheckUser = req.isAuthenticated();
-    const IDstudent = 'ST002';
-    const cour = await model.GetDetailCourse(req.params.IDSubject, req.params.IDCourse);
-    const fb = await model.GetFeedBackByCourseID(req.params.IDCourse);
-    const countfb = await model.CountFeedBackByCourseID(req.params.IDCourse);
-    const IDcourseadd = req.query.addtocart;
-    const CheckIfExists = await model.CheckCourseIfExsistInCart(IDstudent, req.params.IDCourse);
+    if (req.isAuthenticated()) {
+        const IDstudent = req.user;
+        const cour = await model.GetDetailCourse(req.params.IDSubject, req.params.IDCourse);
+        const fb = await model.GetFeedBackByCourseID(req.params.IDCourse);
+        const countfb = await model.CountFeedBackByCourseID(req.params.IDCourse);
+        const IDcourseadd = req.query.addtocart;
+        const CheckIfExists = await model.CheckCourseIfExsistInCart(IDstudent, req.params.IDCourse);
 
-    if (IDcourseadd != undefined) {
-        model.InsertCartItem(IDstudent, IDcourseadd);
-        console.log('ADD TO CART OF STUDENT ' + IDstudent + ': COURSE ' + IDcourseadd);
+        if (IDcourseadd != undefined) {
+            model.InsertCartItem(IDstudent, IDcourseadd);
+            console.log('ADD TO CART OF STUDENT ' + IDstudent + ': COURSE ' + IDcourseadd);
+        }
+
+        res.render('../views/CourseDetailPage/CourseDetail.hbs', { Course: cour[0], Feedback: fb, CountFB: countfb[0], Check: CheckIfExists[0], CheckUser });
+    } else {
+
     }
-
-    res.render('../views/CourseDetailPage/CourseDetail.hbs', { Course: cour[0], Feedback: fb, CountFB: countfb[0], Check: CheckIfExists[0], CheckUser });
 });
 
 router.get('/Search', async (req, res) => {
@@ -135,68 +176,102 @@ router.get('/Search', async (req, res) => {
     res.render('../views/SearchPage/ListSearch.hbs', { LS: search, CS: countsearch[0], CheckUser });
 });
 router.get('/Cart', async (req, res) => {
-    const CheckUser = req.isAuthenticated();
-    const IDstudent = 'ST002'; //Nho sua cho nay
-    const IDCart = 'CA001';//Nho sua cho nay
-    const CountCartItem = await model.CountCartItemByIDStudent(IDstudent);
-    const LI = await model.GetAllCartItemByIDStudent(IDstudent);
-    const RIDCart = req.query.removeCartID;
-    const RIDCourse = req.query.removeCourseID;
+    const CheckUser = req.isAuthenticated(); // Biến này để check load đúng header.
+    if (req.isAuthenticated()) {
+        const CountCartItem = await model.CountCartItemByIDCart(IDcart);
+        const LI = await model.GetAllCartItemByIDCart(IDcart);
+        const Total = await model.GetTotalPrice(IDcart);
+        res.render('../views/CartItemPage/CartItem.hbs', { ListItem: LI, demcart: CountCartItem[0], totalPrice: Total[0], CheckUser });
+    } else {
+        res.sendFile('Login.html', { root: path.join(__dirname, '../views/LoginPage/') });
+    }
+});
+router.post('/Cart', async (req, res) => {
+    const RIDCart = req.body.removeCartID;
+    const RIDCourse = req.body.removeCourseID;
     if (RIDCourse != undefined && RIDCart != undefined) {
         await model.RemoveCartItems(RIDCart, RIDCourse);
-        console.log('REMOVE: CART ' + RIDCart + ': COURSE ' + RIDCourse);
+        console.log('REMOVE CART ' + RIDCart + ': COURSE ' + RIDCourse);
     }
-    const Total = await model.GetTotalPrice(IDCart);
-    //model.RemoveCartItems(req.query.removeCartID,req.query.removeCourseID); 
-    res.render('../views/CartItemPage/CartItem.hbs', { ListItem: LI, demcart: CountCartItem[0], totalPrice: Total[0], CheckUser });
+    res.redirect('/Cart');
 });
 
-router.get('/LoadingAdmin',async(req,res) => {
-    res.render('../views/animationPage/LoadingAdmin.hbs');
+
+router.get('/test', async (req, res) => {
+    const IDstudent = 'ST002';
+    const CheckCart = await model.CheckCartNotPayByIDstudent(IDstudent); //Kiem tra gio hang nao chua thanh toan cua student
+});
+
+router.get('/Loading', async (req, res) => {
+    res.render('../views/animationPage/Loading.hbs');
 });
 
 router.get('/admin', async (req, res) => {
+    const CheckUser = req.isAuthenticated();
+    if (req.user == 'AD001') {
+        const StuMoney = await model.GetMoneyALlStudent();
+        const RevPerMon = await model.GetRevenuePerMonth();
+        res.render('../views/AdminPage/RevenueManage', { StuMoney: StuMoney, RevPerMon: RevPerMon });
+    } else {
+        console.log('User cố gắng truy cập AdminPage.');
+        res.redirect('/Loading');
+    }
+
     //const MonthMana = await model.ManageEnrollByMonth();
-    const StuMoney = await model.GetMoneyALlStudent();
-    const RevPerMon = await model.GetRevenuePerMonth();
-    res.render('../views/AdminPage/RevenueManage', { StuMoney: StuMoney, RevPerMon: RevPerMon });
+
 });
 
 router.get('/admin/CourseManage', async (req, res) => {
-    const NumofSub = await model.CountSubscibersAllCourses();
-    const TopRatCo = await model.TOP6RatingCourse();
-    res.render('../views/AdminPage/CourseManage', { NumofSub: NumofSub, TopRatCo: TopRatCo });
+    const CheckUser = req.isAuthenticated();
+    if (req.user == 'AD001') {
+        const NumofSub = await model.CountSubscibersAllCourses();
+        const TopRatCo = await model.TOP6RatingCourse();
+        res.render('../views/AdminPage/CourseManage', { NumofSub: NumofSub, TopRatCo: TopRatCo });
+    } else {
+        console.log('User cố gắng truy cập AdminPage.');
+        res.redirect('/Loading');
+    }
 });
 
 router.get('/admin/CustomerManage', async (req, res) => {
-    const AllStu = await model.GetAllStudent();
-    const MonthMana = await model.ManageEnrollByMonth();
-    res.render('../views/AdminPage/CustomerManage', { AllStu: AllStu, MonMana: MonthMana });
+    const CheckUser = req.isAuthenticated();
+    if (req.user == 'AD001') {
+        const AllStu = await model.GetAllStudent();
+        const MonthMana = await model.ManageEnrollByMonth();
+        res.render('../views/AdminPage/CustomerManage', { AllStu: AllStu, MonMana: MonthMana });
+    } else {
+        console.log('User cố gắng truy cập AdminPage.');
+        res.redirect('/Loading');
+    }
 });
 
 router.get('/Cart/paypal/success/:idcart/:money', async (req, res) => {
-    const CheckUser = req.isAuthenticated();
-    const IDcart = req.params.idcart;
-    const money = parseInt(req.params.money);
-    const IDbill = await model.GetBillIDTop1();
-    var bi = parseInt(IDbill[0].ID);
-    bi = bi + 1;
-    var bill_id;
-    if (bi < 10) {
-        bill_id = "BI00" + bi;
-    } else if (bi < 100 && bi >= 10) {
-        bill_id = "BI0" + bi;
+    if (req.isAuthenticated()) {
+        const CheckUser = req.isAuthenticated();
+        const IDcart = req.params.idcart;
+        const money = parseInt(req.params.money);
+        const IDbill = await model.GetBillIDTop1();
+        var bi = parseInt(IDbill[0].ID);
+        bi = bi + 1;
+        var bill_id;
+        if (bi < 10) {
+            bill_id = "BI00" + bi;
+        } else if (bi < 100 && bi >= 10) {
+            bill_id = "BI0" + bi;
+        } else {
+            bill_id = "BI" + bi;
+        }
+        var biid = String(bill_id);
+        var checkcart = await model.CheckCartExistsInBill(IDcart);
+        if (checkcart[0].dem == 0) {  //Kiểm tra giỏ hàng đã thanh toán trước đó chưa.
+            await model.InsertBill(biid, IDcart, money);
+            await model.UpadeCart_Paystatus(IDcart, money);
+            console.log('Thanh toán thành công ID bill: ' + biid);
+            res.render('../views/PaypalPay/Success.hbs', { CheckUser });
+        } else res.render('../views/PaypalPay/Error.hbs', { CheckUser });
     } else {
-        bill_id = "BI" + bi;
+        res.sendFile('Login.html', { root: path.join(__dirname, '../views/LoginPage/') });
     }
-    var biid = String(bill_id);
-    var checkcart = await model.CheckCartExistsInBill(IDcart);
-    if (checkcart[0].dem == 0) {  //Kiểm tra giỏ hàng đã thanh toán trước đó chưa.
-        await model.InsertBill(biid, IDcart, money);
-        await model.UpadeCart_Paystatus(IDcart, money);
-        console.log('Thanh toán thành công ID bill: ' + biid);
-        res.render('../views/PaypalPay/Success.hbs', { CheckUser });
-    } else res.render('../views/PaypalPay/Error.hbs', { CheckUser });
 });
 
 module.exports = router;
