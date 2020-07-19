@@ -173,7 +173,7 @@ INSERT INTO Discount VALUES
 -- ALTER TABLE `CartItems` ADD FOREIGN KEY (`course_id`) REFERENCES `Courses` (`course_id`);
 
 
-INSERT INTO lessons VALUES
+INSERT INTO Lessons VALUES
     ('LS001','CS001','CT001','https://youtu.be/MAEg9cwi4aY','https://i.ytimg.com/vi/MAEg9cwi4aY/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLClVkxYvpgGBCKnfNfKEcLE-AmkOA','Create Ecommerce Website Tutorial : P 1 Preparation and Create Top Menu',NULL,NULL),
     ('LS002','CS001','CT001','https://youtu.be/9hxIAIc0Si0','https://i.ytimg.com/vi/xr7VPSV-gjg/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLDsW6bFVHrxZAoc4IaefkmVUSAYLA','Create Ecommerce Website Tutorial : P 2 Create Main menu',NULL,NULL),
     ('LS003','CS001','CT001','https://youtu.be/xr7VPSV-gjg','https://i.ytimg.com/vi/jNlb6q1hbmE/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB&rs=AOn4CLCWS9d4ndZSEkt7OgkBww8Ii3hS2Q','Create Ecommerce Website Tutorial : P 3 Create Slider Home Page',NULL,NULL),
@@ -294,9 +294,9 @@ INSERT INTO lessons VALUES
     ('LS118','CS026','CT048','https://youtu.be/R_DBNXWz30w','https://i.ytimg.com/vi/bIBSjVw0j_I/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLB26EYdBLKSpz-74Wkao98WaeTahg','Learning English Pronunciation | Lesson 20 | /r / | English Marathon',NULL,NULL),
     ('LS119','CS026','CT049','https://youtu.be/KTI0PBZ4GCY','https://i.ytimg.com/vi/bIBSjVw0j_I/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLB26EYdBLKSpz-74Wkao98WaeTahg','Learning English Pronunciation Lesson 21 w vs j English Marathon',NULL,NULL);
     
-    
-  INSERT INTO courses VALUES
-    ('CS001','Create Ecommerce Website Tutorial','https://www.youtube.com/playlist?list=PLHdjLtO7x0fVCRKlIsQVM0aec2kzwn5RC&pbjreload=10','https://i.ytimg.com/vi/MAEg9cwi4aY/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBckl0VXoWsqCJTUiRKOYle5fXmuQ',' Create Ecommerce Website Tutorial<br>Make / Create a modern E-Commerce Store website In php, mysqli and bootstrap with complete functionalities in a single course.<br>Please help me reach 10k subscriber. It will boost my mood to make more video tutorial from the knowledge I have for free.<br>The source code link at the very bottom ??<br>What Will You Learn?<br>-You will learn how to make an Elegant Ecommerce Website<br>-You Will learn hot to create Content Management System ( CMS )<br>-You will learn how to make price,products and types filters.<br>-You will learn making the coupon code for products and bundles.<br>-You will learn how to make bundles for products.<br>-You will be able to set the sale and original both of prices for products and bundles.<br>-You will be able to set the different labels for products and bundles like sale,gift etc<br>-You will be able to make paypal integration with any e-commerce website.<br>-You will learn to make forgot password functionality.<br>-You will learn to add google recaptcha in your website register and contact us information form.<br>-You will learn to make email confirmation functionality.<br>-You will learn to make add to wishlist functionality.<br>-Admin will be given complete access to admin panel to control everything dynamically.<br>-In short, at the end of my course,You will be able to make any kind of modern e-commerce store in php&mysqli with the assistance of bootstrap 3.<br>Requirements<br>Localhost server like XAMPP or WampServer (i use Xamp v3.2.2)<br>-Text editor (i use Bracket)<br>-Browser (i use Firefor & Chrome)<br>?? Description ??<br>I have made a modern e-commerce store for those who want to learn making any kind of e-commerce store by purely using php and mysqli functions with the assistance of bootstrap frame work to make it complete responsive and dynamic.<br>Often people use bootstrap for this purpose and the good thing of the usage of bootstrap kinds of frame work is that You can easily make any kind of theme responsive without indulging themselves in any complicated issues. Therefore I have made this e-commerce store to make the You fully expert over all the essential php & mysqli functions and bootstrap frame work.<br>So I am very hopeful that, after watching this tutorial course and learning it, you will get a good control over making any kind of advance level responsive plus dynamic e-commerce web site with all its complete functionalities with the assistance of bootstrap, php & mysqli.<br>I have focused to make the You fully experts in the usage of all the essential php & mysqli functions and bootstrap,so you could learn their usage very well.<br>??Sorry for not being able to provide the best service for this video tutorial. I had major isues, when almost all my development devices was damaged by lightning  strike.<br>-Headset<br>-Microphone<br>-PC (Motherboard & Ram)<br>-Etc<br>If you are willing to donate to me. That will really help me. And this will make it easier for me to continue to share the knowledge that I have for free.<br>Use this link to donate:<br>https://tinyurl.com/donate-to-mdev<br>So Grab your Tea / Coffee, Because this will be a very long series to learn. Have a good day.',50),
+
+  INSERT INTO Courses VALUES
+    ('CS001','Create Ecommerce Website Tutorial','https://www.youtube.com/playlist?list=PLHdjLtO7x0fVCRKlIsQVM0aec2kzwn5RC&pbjreload=10','https://i.ytimg.com/vi/MAEg9cwi4aY/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBckl0VXoWsqCJTUiRKOYle5fXmuQ',' Create Ecommerce Website Tutorial. Make / Create a modern E-Commerce Store website In php, mysqli and bootstrap with complete functionalities in a single course.=ore video tutorial from the knowledge I have for free.<br>The source code link at the very bottom ??<br>What Will You Learn?<br>-You will learn how to make an Elegant Ecommerce Website<br>-You Will learn hot to create Content Management System ( CMS )<br>-You will learn how to make price,products and types filters.<br>-You will learn making the coupon code for products and bundles.<br>-You will learn how to make bundles for products',50),
     ('CS002','Learn C++ in 21 days!','https://www.youtube.com/playlist?list=PLB7ZlVMcmjIDyDqor_CacW8azkVwO04eG','https://i.ytimg.com/vi/W_rkamfgRiM/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCePSAU3omY-MMusvnUbsNbmTcOvg','DO you NOT BELIEVE YOU CAN LEARN C++?? WELL I THINK YOU DEFINITELY CAN. TODAY WE ARE GOING TO COVER HELLO WORLD. YOU DEFINITELY CAN LEARN C++ IN 21 DAYS AND I BELIEVE IN YOU. I KNOW YOU CAN DO IT!!!',60),
     ('CS003','How to program in C#','https://www.youtube.com/playlist?list=PLPV2KyIb3jR6ZkG8gZwJYSjnXxmfPAl51','https://i.ytimg.com/vi/pSiIHe2uZ2w/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLCsssSur6g_GIf7wADpUpR7k0My8Q','Want to make powerful games, Windows and Mac software or mobile applications? Then this course is a great place to start. Learn how to read, write and understand C# code completely from scratch as we lay a great foundation for creating various types of software.',30),
     ('CS004','Python Tutorial for Beginers','https://www.youtube.com/playlist?list=PLsyeobzWxl7poL9JTVyndKe62ieoN-MZ3','https://i.ytimg.com/vi/QXeEoD0pB3E/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDFfxTTv31qjpdalu6WVYgDswHgcg','Python Tutorial, Easy Python tutorial for beginner, learn Python Programming, learn python programming with example and syntax. Download python, install python, using python IDE, IDLE, Pycharm IDE, notepad,  getting started with python, variables, functions, object, list in python, set in python, help in python, data types, operators, math function, run, debug python code, conditional statement, array, matrix in python, python by navin reddy',20),
@@ -328,7 +328,7 @@ INSERT INTO lessons VALUES
     ('CS030','B2 First (FCE) Exam Preparation Lessons','https://www.youtube.com/watch?v=ihIQ8_-49Fo&list=PLD6t6ckHsruZxTxZvNJIrR_TSsvCfPGFg','https://i.ytimg.com/vi/ihIQ8_-49Fo/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLAz9gsWsF4cox1bQkYZCpCyZCEkQQ','English Marathon, where you can find free quality Videos for improving your English. ',62);
     
 
-    INSERT INTO chapters VALUES
+    INSERT INTO Chapters VALUES
     ('CT001','CS001','Chapter 1'),
     ('CT002','CS001','Chapter 2'),
     ('CT003','CS001','Chapter 3'),
@@ -340,7 +340,7 @@ INSERT INTO lessons VALUES
     ('CT009','CS002','Chapter 3');
     
     
-   INSERT INTO feedback VALUES
+   INSERT INTO Feedback VALUES
     ('FB001','CS001','ST001',3,'eros. Proin ultrices. Duis volutpat nunc sit amet metus. Aliquam','2019-08-02 10:00:00'),
     ('FB002','CS002','ST002',2,'faucibus ut, nulla. Cras eu tellus eu augue porttitor interdum.','2021-05-07 20:22:00'),
     ('FB003','CS003','ST003',4,'egestas rhoncus. Proin nisl sem, consequat nec, mollis vitae, posuere','2020-01-02 03:02:00'),
@@ -442,7 +442,7 @@ INSERT INTO lessons VALUES
     ('FB099','CS009','ST011',1,'malesuada augue ut lacus. Nulla tincidunt, neque vitae semper egestas,','2020-04-09 19:24:00'),
     ('FB100','CS010','ST011',3,'metus sit amet ante. Vivamus non lorem vitae odio sagittis','2020-08-16 00:58:00');    
     
-    INSERT INTO authors VALUES
+    INSERT INTO Authors VALUES
     ('AT001','https://cdn.moveek.com/media/cache/large/5c00c40365e20325087566.jpg','Cameo','Stan Lee',10,0,'Stan Lee (born Stanley Martin Lieber December 28, 1922  November 12, 2018) was an American comic book writer, editor, publisher, and producer. He rose through the ranks of a family-run business to become Marvel Comics'' primary creative leader for two decades, leading its expansion from a small division of a publishing house to a multimedia corporation that dominated the comics industry.',0,0),
     ('AT002','https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p302167/cp/cpc/images/masterrepository/performer%20images/p302167/chrisevans-2019.jpg','Koch','Mariam',1,0,'urna. Nunc quis arcu vel quam dignissim pharetra. Nam ac nulla. In tincidunt congue turpis. In condimentum. Donec at arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque dui. Suspendisse ac metus vitae velit egestas lacinia. Sed congue, elit sed consequat auctor, nunc nulla vulputate dui, nec tempus mauris erat eget ipsum. Suspendisse sagittis. Nullam vitae diam. Proin dolor. Nulla semper tellus id nunc interdum feugiat. Sed nec metus facilisis lorem tristique aliquet. Phasellus fermentum convallis ligula. Donec luctus aliquet odio. Etiam ligula',0,0),
     ('AT003','https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p19966/cp/cpc/images/masterrepository/performer%20images/p19966/robert162574544.jpg','Powell','Dillon',15,0,'mollis lectus pede et risus. Quisque libero lacus, varius et, euismod et, commodo at, libero. Morbi accumsan laoreet ipsum. Curabitur consequat, lectus sit amet luctus vulputate, nisi sem semper erat, in consectetuer ipsum nunc id enim. Curabitur massa. Vestibulum accumsan neque et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida. Aliquam tincidunt, nunc ac mattis ornare, lectus ante dictum mi, ac mattis velit justo nec ante. Maecenas mi felis, adipiscing fringilla, porttitor vulputate, posuere vulputate, lacus. Cras interdum. Nunc sollicitudin commodo ipsum. Suspendisse non leo. Vivamus nibh dolor, nonummy ac, feugiat non, lobortis quis, pede.',0,0),
@@ -474,7 +474,7 @@ INSERT INTO lessons VALUES
     ('AT029','https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p18926/cp/cpc/images/masterrepository/performer%20images/p18926/leonardo159466890.jpg','Mcintosh','Addison',17,0,'arcu eu odio tristique pharetra. Quisque ac libero nec ligula consectetuer rhoncus. Nullam velit dui, semper et, lacinia vitae, sodales at, velit. Pellentesque ultricies dignissim lacus. Aliquam rutrum lorem ac risus. Morbi metus. Vivamus euismod urna. Nullam lobortis quam a felis ullamcorper viverra. Maecenas iaculis aliquet diam. Sed diam lorem, auctor quis, tristique ac, eleifend vitae, erat. Vivamus nisi. Mauris nulla. Integer urna. Vivamus molestie dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula. Nullam feugiat placerat velit. Quisque varius. Nam porttitor scelerisque neque. Nullam nisl. Maecenas malesuada fringilla est. Mauris eu turpis. Nulla aliquet. Proin velit. Sed',0,0);
     
     
-    INSERT INTO author_course VALUES
+    INSERT INTO Author_Course VALUES
     ('AT001','CS001'),
     ('AT002','CS002'),
     ('AT003','CS003'),
@@ -507,7 +507,7 @@ INSERT INTO lessons VALUES
     ('AT029','CS030');
 
 
-INSERT INTO subjects VALUES
+INSERT INTO Subjects VALUES
     ('SB001','IT'),
     ('SB002','Language'),
     ('SB003','Science'),
@@ -526,7 +526,7 @@ INSERT INTO subjects VALUES
     ('SB016','Skilled Trades');
     
     
-    INSERT INTO subject_course VALUES
+    INSERT INTO Subject_Course VALUES
     ('SB001','CS001'),
     ('SB001','CS002'),
     ('SB001','CS003'),
@@ -557,8 +557,8 @@ INSERT INTO subjects VALUES
     ('SB002','CS028'),
     ('SB002','CS029'),
     ('SB002','CS030');
-    
-    INSERT INTO cart VALUES
+    -- delete from cart where 1=1
+    INSERT INTO Cart VALUES
     ('CA001','ST003','2020-01-27 00:00:00',0,12,1),
     ('CA002','ST004','2020-02-27 00:00:00',0,23,1),
     ('CA003','ST005','2020-03-27 00:00:00',0,13,1),
@@ -570,9 +570,10 @@ INSERT INTO subjects VALUES
     ('CA009','ST011','2020-09-27 00:00:00',0,12,1),
     ('CA010','ST004','2020-10-27 00:00:00',0,18,1),
     ('CA011','ST003','2020-11-27 00:00:00',0,80,1),
-    ('CA012','ST001','2020-12-27 00:00:00',0,34,1);
+    ('CA012','ST003','2020-12-27 00:00:00',0,34,1),
+    ('CA013','ST003','2020-11-27 00:00:00',0,34,0);
 
-	INSERT INTO elearning.bill VALUES 
+	INSERT INTO bill VALUES 
     ('BI001','CA001','2020-01-27 00:00:00',12),
     ('BI002','CA002','2020-02-27 00:00:00',23),
     ('BI003','CA003','2020-03-27 00:00:00',13),
@@ -586,28 +587,28 @@ INSERT INTO subjects VALUES
     ('BI011','CA011','2020-11-27 00:00:00',80),
 	('BI012','CA012','2020-12-27 00:00:00',34); 
 
-INSERT INTO cartitems VALUES
+INSERT INTO CartItems VALUES
     ('CA001','CS001'),
     ('CA001','CS002'),
     ('CA001','CS003'),
     ('CA001','CS004'),
     ('CA001','CS005');
 
-INSERT INTO enroll VALUES
+INSERT INTO Enroll VALUES
     ('ER001','CS001','ST001','2020-08-02 10:00:00',1,0),
     ('ER002','CS002','ST002','2020-07-02 20:22:00',1,1),
     ('ER003','CS003','ST003','2020-06-02 03:02:00',1,1),
-    ('ER004','CS004','ST004','2020-08-02 21:08:00',1,1),
-    ('ER005','CS005','ST005','2020-07-02 13:16:00',1,0),
+    ('ER004','CS004','ST004','2020-05-02 21:08:00',1,1),
+    ('ER005','CS005','ST005','2020-04-02 13:16:00',1,0),
     ('ER006','CS006','ST006','2020-06-02 13:20:00',1,1),
-    ('ER007','CS007','ST007','2020-08-02 17:50:00',0,0),
-    ('ER008','CS008','ST008','2020-08-02 18:54:00',1,1),
-    ('ER009','CS009','ST009','2020-08-02 10:21:00',1,0),
+    ('ER007','CS007','ST007','2020-03-02 17:50:00',0,0),
+    ('ER008','CS008','ST008','2020-02-02 18:54:00',1,1),
+    ('ER009','CS009','ST009','2020-01-02 10:21:00',1,0),
     ('ER010','CS010','ST010','2020-08-02 10:54:00',1,1),
-    ('ER011','CS011','ST011','2020-08-02 06:15:00',0,0),
-    ('ER012','CS012','ST001','2020-08-02 10:00:00',1,1),
-    ('ER013','CS013','ST002','2020-08-02 20:22:00',1,0),
-    ('ER014','CS014','ST003','2020-08-02 03:02:00',1,1),
+    ('ER011','CS011','ST011','2020-09-02 06:15:00',0,0),
+    ('ER012','CS012','ST001','2020-10-02 10:00:00',1,1),
+    ('ER013','CS013','ST002','2020-11-02 20:22:00',1,0),
+    ('ER014','CS014','ST003','2020-12-02 03:02:00',1,1),
     ('ER015','CS014','ST004','2020-09-02 21:08:00',1,0),
     ('ER016','CS016','ST005','2020-02-02 13:16:00',1,1),
     ('ER017','CS017','ST006','2020-08-02 13:20:00',0,0),
@@ -629,12 +630,13 @@ INSERT INTO enroll VALUES
     ('ER033','CS030','ST011','2020-06-02 06:15:00',1,1);
 
 
-INSERT INTO administrators VALUES
-    ('AD001','admin1',1234);
+INSERT INTO Administrators VALUES
+	('AD001','admin1',1234),
+    ('AD002','admin2',1234);
     
-    
-    INSERT INTO students VALUES
-    ('ST001','student1',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p200349/cp/cpc/images/masterrepository/performer%20images/p200349/leto.jpg','Keller','Potts',NULL,'jw@gmail.com',123456789,'2019-08-02 10:00:00','2019-08-02 10:00:00',0),
+-- delete from students where 1=1
+    INSERT INTO Students VALUES
+    ('AD001','admin1',1234,NULL,'Admin','Admin',NULL,NULL,NULL,NULL,NULL,0),
     ('ST002','student2',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p302167/cp/cpc/images/masterrepository/performer%20images/p302167/chrisevans-2019.jpg','Potts','Keller',NULL,'jw@gmail.com',123456789,'2021-05-07 20:22:00','2021-05-07 20:22:00',0),
     ('ST003','student3',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p19966/cp/cpc/images/masterrepository/performer%20images/p19966/robert162574544.jpg','Barron','Marshall',NULL,'jw@gmail.com',123456789,'2020-01-02 03:02:00','2020-01-02 03:02:00',0),
     ('ST004','student4',1234,'https://images.fandango.com/r1.0.874/ImageRenderer/120/180/redesign/static/img/noxportrait.jpg/p562566/cp/cpc/images/masterrepository/performer%20images/p562566/jenniferlawrence-2019.jpg','Marshall','Barron',NULL,'jw@gmail.com',123456789,'2021-04-02 21:08:00','2021-04-02 21:08:00',0),

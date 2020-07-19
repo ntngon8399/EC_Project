@@ -152,13 +152,13 @@ router.get('/Courses/:IDSubject/:IDCourse', async (req, res) => {
     const CheckUser = req.isAuthenticated();
     const cour = await model.GetDetailCourse(req.params.IDSubject, req.params.IDCourse);
     const fb = await model.GetFeedBackByCourseID(req.params.IDCourse);
-    const countfb = await model.CountFeedBackByCourseID(req.params.IDCourse);
+    const countfb = await model.CountFeedbackByCourseID(req.params.IDCourse);
     const lesson = await model.GetLessonByIDCOure(req.params.IDCourse);
     if (req.isAuthenticated()) {
         const CheckIfExists = await model.CheckCourseIfExsistInCart(IDcart, req.params.IDCourse);
-        res.render('../views/CourseDetailPage/CourseDetail.hbs', { Course: cour[0], Feedback: fb, CountFB: countfb[0], Check: CheckIfExists[0], CheckUser,lesson: lesson});
+        res.render('../views/CourseDetailPage/CourseDetail.hbs', { Course: cour[0], Feedback: fb, CountFB: countfb[0], Check: CheckIfExists[0], CheckUser, lesson: lesson });
     } else {
-        res.render('../views/CourseDetailPage/CourseDetail.hbs', { Course: cour[0], Feedback: fb, CountFB: countfb[0], CheckUser,lesson: lesson });
+        res.render('../views/CourseDetailPage/CourseDetail.hbs', { Course: cour[0], Feedback: fb, CountFB: countfb[0], CheckUser, lesson: lesson });
     }
 });
 
@@ -168,6 +168,34 @@ router.post('/Courses/:IDSubject/:IDCourse', async (req, res) => {
     model.InsertCartItem(IDcart, course_id);
     console.log('ADD TO CART ' + IDcart + ': COURSE ' + course_id);
     res.redirect('/Courses' + `/${subjectid}` + `/${course_id}`);
+});
+
+router.post('/Courses/:IDSubject/:IDCourse/Message', async (req, res) => {
+    if (req.isAuthenticated()) {
+    const course_id = req.params.IDCourse;
+    const subjectid = req.params.IDSubject;
+    const message = req.body.message;
+    const rating = parseInt(req.body.ratingstar);
+    const user = req.user;
+
+    const FB = await model.GetFeedBackIDTop1();
+    var id = parseInt(FB[0].ID);
+    id = id + 1;
+    var fb_id;
+    if (id < 10) {
+        fb_id = "FB00" + id;
+    } else if (id < 100 && id >= 10) {
+        fb_id = "FB0" + id;
+    } else {
+        fb_id = "FB" + id;
+    }
+    var IDFB = String(fb_id);  //Tao ID feedback moi
+    model.InsertFeedBack(IDFB,course_id,user,rating,message);
+    console.log('\nĐã thêm nhận xét của ' + user + ' về ' + course_id + '\nRating: ' + rating + '\nNội dung: ' + message);
+    res.redirect('/Courses' + `/${subjectid}` + `/${course_id}`);
+    }else{
+        res.sendFile('Login.html', { root: path.join(__dirname, '../views/LoginPage/') });
+    }
 });
 
 router.get('/Search', async (req, res) => {
@@ -198,13 +226,13 @@ router.post('/Cart', async (req, res) => {
     res.redirect('/Cart');
 });
 
-router.get('/Buyed',async (req, res)=>{
-    if(req.isAuthenticated()){
+router.get('/Buyed', async (req, res) => {
+    if (req.isAuthenticated()) {
         const CheckUser = req.isAuthenticated();
         const BuyedCour = await model.GetCourseBuyedByIDStudent(req.user);
         const countbuyed = await model.CountCourseBuyedByIDStudent(req.user);
         res.render('../views/BuyedPage/Buyed.hbs', { LS: BuyedCour, CS: countbuyed[0], CheckUser });
-    }else{
+    } else {
         res.redirect('/Loading');
     }
 });

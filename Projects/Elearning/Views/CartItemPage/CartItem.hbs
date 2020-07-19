@@ -1,3 +1,7 @@
+{{>header}}
+<script>
+    document.getElementById('sidebarToggle').style.display = "none";
+</script>
 <!-- Start Banner Area -->
 <section class="banner-area relative">
     <div class="container">
@@ -47,8 +51,10 @@
                         <td class="col-sm-1 col-md-1 text-center"><strong>${{this.course_price}}</strong></td>
                         <td class="col-sm-1 col-md-1 text-center"><strong> {{this.saleoff}}%</strong></td>
                         <td class="col-sm-1 col-md-1 text-center"><strong>${{this.Totalprice1}}</strong></td>
+                        <div style="display: none" id="cartid">{{this.cart_id}}</div>
+
                         <td class="col-sm-1 col-md-1">
-                            <form action="/Cart" method="GET">
+                            <form action="/Cart" method="POST">
                                 <input type="hidden" id="removeCartID" name="removeCartID" value="{{this.cart_id}}">
                                 <input type="hidden" id="removeCourseID" name="removeCourseID"
                                     value="{{this.course_id}}">
@@ -67,7 +73,7 @@
                             <h5>Subtotal</h5>
                         </td>
                         <td class="text-right">
-                            <h5><strong>$24.59</strong></h5>
+                            <h5><strong>{{totalPrice.total}}</strong></h5>
                         </td>
                     </tr>
 
@@ -79,17 +85,16 @@
                             <h3>Total (USD)</h3>
                         </td>
                         <td class="text-right">
-                            <strong><h3 id="Total">{{totalPrice.total}}</h3></strong>
+                            <strong>
+                                <h3 id="Total">{{totalPrice.total}}</h3>
+                            </strong>
                         </td>
                     </tr>
 
                     <tr>
                         <td>   </td>
                         <td>   </td>
-                        <td> <button onclick="goBack()" type="button" class="btn btn-outline-info">
-                                <span class="glyphicon glyphicon-shopping-cart"></span> Update cart
 
-                            </button>  </td>
                         <td>
                             <button type="button" class="btn btn-outline-info">
                                 <a href="/"><span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
@@ -117,7 +122,7 @@
                 <div id="paypal-button-container"></div>
                 {{!-- end paypal --}}
             </div>
-             <div class="col-md-2"> 
+            <div class="col-md-2">
                 {{!-- Paypal Button demo --}}
                 {{!-- <div id="paypal-button-container"></div> --}}
                 {{!-- end paypal --}}
@@ -133,6 +138,7 @@
     //paypal.Buttons().render('#paypal-button-container');
     // This function displays Smart Payment Buttons on your web page.
     var Total = document.getElementById("Total").innerHTML;
+    var cartid = document.getElementById("cartid").innerHTML;
     var TotalValue = parseInt(Total); // Giá tiền tổng cộng
     paypal.Buttons({
         createOrder: function (data, actions) {
@@ -140,18 +146,19 @@
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                       value: `${TotalValue}`
+                        value: `${TotalValue}`
                     }
                 }]
             });
         },
         onApprove: function (data, actions) {
             // This function captures the funds from the transaction.
-            return actions.order.capture().then(function (details) {
-                // This function shows a transaction success message to your buyer.
-                alert('Transaction completed by ' + details.payer.name.given_name);
-            });
+            actions.redirect('https://educature-20a07.herokuapp.com/Cart/paypal/success' + `/${cartid}/${TotalValue}`);//Nho thay doi cho nay
+        },
+        onCancel: function (data, actions) {
+            actions.redirect('https://educature-20a07.herokuapp.com/Cart');
         }
     }).render('#paypal-button-container');
+
   //This function displays Smart Payment Buttons on your web page.
 </script>
