@@ -42,6 +42,7 @@ Passport.deserializeUser((id, done) => {
 router.get('/login', async (req, res) => {
     res.sendFile('Login.html', { root: path.join(__dirname, '../views/LoginPage/') });
 });
+
 router.post('/login', Passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/Login',
@@ -86,7 +87,7 @@ router.post('/register', async (req, res) => {
 
 });
 
-var IDcart = 'CA001';  // Biến ID cart Global
+var IDcart = 'CA000';  // Biến ID cart Global
 router.get('/', async (req, res) => {
     const CheckUser = req.isAuthenticated();
     if (req.user == 'AD001') {
@@ -149,23 +150,24 @@ router.get('/Courses/:IDSubject', async (req, res) => {
 
 router.get('/Courses/:IDSubject/:IDCourse', async (req, res) => {
     const CheckUser = req.isAuthenticated();
+    const cour = await model.GetDetailCourse(req.params.IDSubject, req.params.IDCourse);
+    const fb = await model.GetFeedBackByCourseID(req.params.IDCourse);
+    const countfb = await model.CountFeedBackByCourseID(req.params.IDCourse);
+    const lesson = await model.GetLessonByIDCOure(req.params.IDCourse);
     if (req.isAuthenticated()) {
-        const IDstudent = req.user;
-        const cour = await model.GetDetailCourse(req.params.IDSubject, req.params.IDCourse);
-        const fb = await model.GetFeedBackByCourseID(req.params.IDCourse);
-        const countfb = await model.CountFeedBackByCourseID(req.params.IDCourse);
-        const IDcourseadd = req.query.addtocart;
-        const CheckIfExists = await model.CheckCourseIfExsistInCart(IDstudent, req.params.IDCourse);
-
-        if (IDcourseadd != undefined) {
-            model.InsertCartItem(IDstudent, IDcourseadd);
-            console.log('ADD TO CART OF STUDENT ' + IDstudent + ': COURSE ' + IDcourseadd);
-        }
-
-        res.render('../views/CourseDetailPage/CourseDetail.hbs', { Course: cour[0], Feedback: fb, CountFB: countfb[0], Check: CheckIfExists[0], CheckUser });
+        const CheckIfExists = await model.CheckCourseIfExsistInCart(IDcart, req.params.IDCourse);
+        res.render('../views/CourseDetailPage/CourseDetail.hbs', { Course: cour[0], Feedback: fb, CountFB: countfb[0], Check: CheckIfExists[0], CheckUser,lesson: lesson});
     } else {
-
+        res.render('../views/CourseDetailPage/CourseDetail.hbs', { Course: cour[0], Feedback: fb, CountFB: countfb[0], CheckUser,lesson: lesson });
     }
+});
+
+router.post('/Courses/:IDSubject/:IDCourse', async (req, res) => {
+    const course_id = req.body.courseid;
+    const subjectid = req.body.subjectid;
+    model.InsertCartItem(IDcart, course_id);
+    console.log('ADD TO CART ' + IDcart + ': COURSE ' + course_id);
+    res.redirect('/Courses' + `/${subjectid}` + `/${course_id}`);
 });
 
 router.get('/Search', async (req, res) => {
@@ -196,10 +198,19 @@ router.post('/Cart', async (req, res) => {
     res.redirect('/Cart');
 });
 
+router.get('/Buyed',async (req, res)=>{
+    if(req.isAuthenticated()){
+        const CheckUser = req.isAuthenticated();
+        const BuyedCour = await model.GetCourseBuyedByIDStudent(req.user);
+        const countbuyed = await model.CountCourseBuyedByIDStudent(req.user);
+        res.render('../views/BuyedPage/Buyed.hbs', { LS: BuyedCour, CS: countbuyed[0], CheckUser });
+    }else{
+        res.redirect('/Loading');
+    }
+});
 
-router.get('/test', async (req, res) => {
-    const IDstudent = 'ST002';
-    const CheckCart = await model.CheckCartNotPayByIDstudent(IDstudent); //Kiem tra gio hang nao chua thanh toan cua student
+router.get('/Lesson', async (req, res) => {
+    res.render('../views/LessonPage/Lesson.hbs');
 });
 
 router.get('/Loading', async (req, res) => {
